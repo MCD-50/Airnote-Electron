@@ -1,0 +1,45 @@
+{
+  "name": "airnotes",
+  "version": "0.6.0",
+  "description": "Airnotes app for windows, linux and mac",
+  "author": "Ayush Shukla",
+  "homepage": "https://github.com/mcd-50/AirnotePC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mcd-50/AirnotePC.git"
+  },
+  "license": "MIT",
+  "main": "main.js",
+  "scripts": {
+    "prod": "webpack --config webpack.build.config.js && electron --noDevServer .",
+    "dev": "webpack-dev-server --hot --host 0.0.0.0 --config=./webpack.dev.config.js",
+    "build": "webpack --config webpack.build.config.js",
+    "package": "webpack --config webpack.build.config.js",
+    "postpackage": "electron-packager ./ --out=./builds"
+  },
+  "dependencies": {
+    "fluxify": "^0.2.3",
+    "medium-draft": "^0.4.1",
+    "nedb": "^1.8.0",
+    "draft-convert": "^1.4.3",
+    "draft-js": "^0.10.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.4.0",
+    "babel-preset-react": "^6.24.1",
+    "babili-webpack-plugin": "^0.0.11",
+    "css-loader": "^0.28.1",
+    "electron": "^1.6.7",
+    "electron-packager": "^8.7.0",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^0.11.1",
+    "html-webpack-plugin": "^2.28.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-router-dom": "^4.1.1",
+    "style-loader": "^0.17.0",
+    "webpack": "^2.5.1",
+    "webpack-dev-server": "^2.4.5"
+  }
+}

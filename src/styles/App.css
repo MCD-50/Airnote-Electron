@@ -1,0 +1,64 @@
+.splash-container {
+	position: absolute;
+	background-color: black;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.splash-image {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -32px; /* -1 * image width / 2 */
+	margin-top: -32px; /* -1 * image height / 2 */
+}
+
+.editable-div{
+		position: absolute;
+		padding: 4;
+		top:0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		width: 100%;
+		outline: none !important;
+		border-color: transparent;
+		box-shadow: 0 0 0px transparent;
+}
+
+.editable-div:hover, :active, :focus{
+	outline: none !important;
+	border-color: transparent;
+	box-shadow: 0 0 0px transparent;
+}
+
+.empty-message{
+	margin: 33px 0px 0px 10px;
+}
+
+.div_other{
+	display: block;
+	height: 80px;
+}
+
+.div-right{
+	position: absolute;
+	right: 0px;
+}
+
+.div-left{
+	position: absolute;
+	left: 0px;
+}
+
+.side-bar-li{
+	color: white !important;
+}
+
+.side-bar-li:hover{
+	background-color: white !important;
+  	color: black !important;
+}
+
