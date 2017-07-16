@@ -3,10 +3,10 @@
   "version": "0.6.0",
   "description": "Airnotes app for windows, linux and mac",
   "author": "Ayush Shukla",
-  "homepage": "https://github.com/mcd-50/AirnotePC",
+  "homepage": "https://github.com/MCD-50/Airnote-Electron.git",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mcd-50/AirnotePC.git"
+    "url": "https://github.com/MCD-50/Airnote-Electron.git"
   },
   "license": "MIT",
   "main": "main.js",
