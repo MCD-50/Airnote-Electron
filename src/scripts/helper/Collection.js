@@ -4,8 +4,7 @@ export const getKey = (date) => {
 }
 
 
-//dumb functions
-export const getCreatedOn = () => {
+export const getDateTime = () => {
 	let today = new Date();
 	var dd = today.getDate();
 	if (dd.toString().length < 2)
@@ -25,4 +24,25 @@ const parseTime = (hh, mm, ss) => {
 	if (ss.toString().length < 2)
 		ss = '0' + ss;
 	return hh + ':' + mm + ':' + ss;
+}
+
+const months = [
+	'January',
+	'February',
+	'March',
+	'April',
+	'May',
+	'June',
+	'July',
+	'August',
+	'September',
+	'October',
+	'November',
+	'December'
+]
+
+export function getCreatedOn(createdOn) {
+	let array = createdOn.split(' ')[0].split('-');
+	let month = months[parseInt(array[1] - 1)];
+	return array[2] + ' ' + month + ', ' + array[0];
 }

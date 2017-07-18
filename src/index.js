@@ -17,7 +17,6 @@ import './styles/Photon.css';
 import './scripts/js/MediumDraft';
 
 window.onload = () => {
-	console.log(window.location.pathname);
 	render(
 		<Router history={createHashHistory()}>
 			<div>

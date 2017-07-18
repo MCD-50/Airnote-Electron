@@ -51,7 +51,7 @@ export const deleteNote = (key, callback) => {
 			error: error,
 			result: result
 		})
-	})
+	});
 }
 
 export const deleteAllNotes = (callback) => {

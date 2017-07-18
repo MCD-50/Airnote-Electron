@@ -18,11 +18,12 @@
     "postpackage": "electron-packager ./ --out=./builds"
   },
   "dependencies": {
+    "draft-convert": "^1.4.3",
+    "draft-js": "^0.10.0",
+    "draft-js-import-html": "^0.3.2",
     "fluxify": "^0.2.3",
     "medium-draft": "^0.4.1",
-    "nedb": "^1.8.0",
-    "draft-convert": "^1.4.3",
-    "draft-js": "^0.10.0"
+    "nedb": "^1.8.0"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",

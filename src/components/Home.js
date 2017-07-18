@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 
 //helpers
 import { SIDE_VIEW_ITEMS, DETAIL_LINUX_COLOR } from './../scripts/helper/Constant';
-import { getAllNotes, addNote } from '../scripts/helper/Database';
-import { getCreatedOn } from '../scripts/helper/Collection'
+import { getAllNotes } from '../scripts/helper/Database';
+import { getCreatedOn, getDateTime } from '../scripts/helper/Collection'
 
 //enums
 import { Type } from './../scripts/enum/Type';
@@ -31,6 +31,7 @@ class Home extends Component {
 			title: 'Notes',
 			selectedIndex: 0,
 			length: 0,
+			isMounted: false
 		};
 
 		this.loadNotes = this.loadNotes.bind(this);
@@ -42,26 +43,32 @@ class Home extends Component {
 		this.renderTasks = this.renderTasks.bind(this);
 		this.getTasks = this.getTasks.bind(this);
 
+		this.onAddClick = this.onAddClick.bind(this);
 		this.renderSettings = this.renderSettings.bind(this);
-
-		//this.getEmptyText = this.getEmptyText.bind(this);
-		this.onAddClicked = this.onAddClicked.bind(this);
 		this.onSideViewItemClick = this.onSideViewItemClick.bind(this);
 	}
 
 	componentWillMount() {
+		this.setState({ isMounted: true });
 		this.loadNotes();
+	}
+
+
+	componentWillUnMount() {
+		this.setState({ isMounted: false });
 	}
 
 	componentDidMount() {
 		Flux.on('change:notes', (notes) => {
 			const _notes = notes.filter(x => x.type == Type.NOTE).slice();
 			const _tasks = notes.filter(x => x.type == Type.TASK).slice();
-			this.setState({
-				notes: _notes,
-				tasks: _tasks,
-				length: this.state.selectedIndex == 1 ? _tasks.length : (this.state.selectedIndex == 0 ? _notes.length : -1)
-			});
+			if (this.state.isMounted) {
+				this.setState({
+					notes: _notes,
+					tasks: _tasks,
+					length: this.state.selectedIndex == 1 ? _tasks.length : (this.state.selectedIndex == 0 ? _notes.length : -1)
+				});
+			}
 		});
 	}
 
@@ -88,7 +95,6 @@ class Home extends Component {
 		});
 	}
 
-
 	onSideViewItemClick(e) {
 		const { tasks, notes } = this.state;
 		const selectedIndex = SIDE_VIEW_ITEMS.findIndex(item => item.name == e.target.text.trim());
@@ -112,7 +118,7 @@ class Home extends Component {
 		if (tasks.length > 0) {
 			return this.renderTasks(content, tasks);
 		}
-		return (<div style={{ margin: 3 }}> {content} </div>);
+		return (<div style={{ margin: 3, marginTop: 120 }}> {content} </div>);
 	}
 
 
@@ -123,12 +129,12 @@ class Home extends Component {
 					items.map((item, key) => {
 						return (
 							<div key={key} className="tile is-parent">
-								<Link to={{ pathname: '/edit', state: { item: item } }}>
+								<Link to={{ pathname: '/edit', state: { item: item } }} style={{ width: '100%', maxHeight: 300, overflowY: 'hidden' }}>
 									<article className="tile is-child box">
-										<p className="title">{item.modifiedOn}</p>
+										<p className="title">{getCreatedOn(item.modifiedOn)}</p>
 										<p className="subtitle">{item.title}</p>
-										<div className="content">
-											<p>{item.description}</p>
+										<div className="content" style={{minHeight:250, maxHeight: 300, overflowY: 'hidden' }}>
+											<p>{item.text}</p>
 										</div>
 									</article>
 								</Link>
@@ -157,7 +163,7 @@ class Home extends Component {
 		if (notes.length > 0) {
 			return this.renderNotes(content, notes);
 		}
-		return (<div style={{ margin: 3 }}> {content} </div>);
+		return (<div style={{ margin: 3, marginTop: 120 }}> {content} </div>);
 	}
 
 	getNotes(items) {
@@ -167,12 +173,12 @@ class Home extends Component {
 					items.map((item, key) => {
 						return (
 							<div key={key} className="tile is-parent">
-								<Link to={{ pathname: '/edit', state: { item: item } }}>
+								<Link to={{ pathname: '/edit', state: { item: item } }} style={{ width: '100%' }}>
 									<article className="tile is-child box">
-										<p className="title">{item.modifiedOn}</p>
+										<p className="title">{getCreatedOn(item.modifiedOn)}</p>
 										<p className="subtitle">{item.title}</p>
-										<div className="content">
-											<p>{item.description}</p>
+										<div className="content" style={{height:300, overflowY: 'hidden' }}>
+											<p>{item.text}</p>
 										</div>
 									</article>
 								</Link>
@@ -184,10 +190,14 @@ class Home extends Component {
 		);
 	}
 
+	onAddClick(e) {
+		this.props.history.push('./edit');
+	}
+
 
 	renderPane() {
 		const { tasks, notes, selectedIndex } = this.state;
-		if (selectedIndex == 0 && notes.length > 0) {
+		if (selectedIndex == 0) {
 			return this.renderNotes([], notes);
 		} else if (selectedIndex == 1 && tasks.length > 0) {
 			return this.renderTasks([], tasks);
@@ -199,22 +209,6 @@ class Home extends Component {
 	}
 
 
-	onAddClicked(e) {
-		const date = getCreatedOn();
-		const note = {
-			userId: 1,
-			title: 'A Note',
-			type: Type.NOTE,
-			description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.",
-			createdOn: date,
-			modifiedOn: date
-		};
-		addNote(note, (data) => {
-			this.loadNotes()
-		})
-		//this.context.router.push('/edit');
-
-	}
 
 	render() {
 		return (
@@ -237,8 +231,9 @@ class Home extends Component {
 				{
 					this.state.selectedIndex == 2
 						? ''
-						: <a onClick={this.onAddClicked} className="btn-floating btn-large waves-effect waves-light blue div-right"
-							style={{ padding: 0, bottom: 0, marginBottom: 16, marginRight: 16 }}>
+						:
+						<a onClick={this.onAddClick} className="btn-floating btn-large waves-effect waves-light floating-button-add div-right"
+							style={{ padding: 0, bottom: 16 }}>
 							<i className="material-icons">add</i>
 						</a>
 				}

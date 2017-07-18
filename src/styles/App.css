@@ -1,3 +1,7 @@
+body{
+	font-size: 18px !important;
+}
+
 .splash-container {
 	position: absolute;
 	background-color: black;
@@ -13,6 +17,11 @@
 	top: 50%;
 	margin-left: -32px; /* -1 * image width / 2 */
 	margin-top: -32px; /* -1 * image height / 2 */
+}
+
+h1{
+	font-size: 30px !important;
+	padding-bottom: 5px !important;
 }
 
 .editable-div{
@@ -38,19 +47,33 @@
 	margin: 33px 0px 0px 10px;
 }
 
+input{
+	border: 0px !important;
+}
+
+.floating-button-add{
+	background: #333;
+}
+
 .div_other{
 	display: block;
-	height: 80px;
+	height: 120px;
+	left: 200px;
+	right: 16px;
+	background: white;
+	position: fixed;
 }
 
 .div-right{
-	position: absolute;
+	position: fixed;
 	right: 0px;
+	padding-top: 20px;
+	margin-right: 30px;
 }
 
 .div-left{
-	position: absolute;
-	left: 0px;
+	position: fixed;
+	margin-left: 20px;
 }
 
 .side-bar-li{
@@ -62,3 +85,17 @@
   	color: black !important;
 }
 
+.center{
+	text-align: center;
+}
+
+.setting-base-div{
+	margin-top: 120px;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-bottom: 20px;
+}
+button:active, :focus, :visited{
+	background: white !important;
+	border-color: black !important; 
+}
